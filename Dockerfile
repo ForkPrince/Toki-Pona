@@ -1,14 +1,14 @@
-FROM python:3
-
-RUN mkdir /app
+FROM python:3.12-slim
 
 WORKDIR /app
 
 COPY requirements.txt .
-
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+
+ENV HF_HOME=/app/.hf
+RUN python download_models.py
 
 EXPOSE 8080
 
