@@ -19,6 +19,13 @@ from waitress import serve
 
 app = Flask(__name__)
 
+@app.after_request
+def add_cors_headers(resp: Response) -> Response:
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    resp.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD"
+    resp.headers["Access-Control-Allow-Headers"] = "*"
+    return resp
+
 _v1_lock = threading.Lock()
 _v2_lock = threading.Lock()
 
